@@ -7,6 +7,9 @@
     "start": "node index.js",
     "test": "npm test"
   },
+  "bin": {
+    "crypton": "index.js"
+  },
   "author": {
     "name": "Danilo Sampaio",
     "email": "danilo.sampaio@gmail.com",
