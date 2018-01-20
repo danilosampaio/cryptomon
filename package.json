@@ -1,6 +1,6 @@
 {
   "name": "cryptomon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple cryptocurrencies monitor.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "npm test"
   },
   "bin": {
-    "cryptomon": "index.js"
+    "cryptomon": "./bin/index.js"
   },
   "preferGlobal": "true",
   "author": {
