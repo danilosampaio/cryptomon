@@ -1,6 +1,6 @@
 {
   "name": "cryptomon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple cryptocurrencies monitor.",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "bin": {
     "cryptomon": "index.js"
   },
+  "preferGlobal": "true",
   "author": {
     "name": "Danilo Sampaio",
     "email": "danilo.sampaio@gmail.com",
