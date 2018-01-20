@@ -1,0 +1,23 @@
+{
+  "name": "cryptomon",
+  "version": "0.0.1",
+  "description": "A simple cryptocurrencies monitor.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm test"
+  },
+  "author": {
+    "name": "Danilo Sampaio",
+    "email": "danilo.sampaio@gmail.com",
+    "url": "github.org/danilosampaio"
+  },
+  "repository": "danilosampaio/cryptomon",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "lodash.sortby": "^4.7.0",
+    "log-update": "^2.3.0",
+    "ws": "^4.0.0"
+  }
+}
