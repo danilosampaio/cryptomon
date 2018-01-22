@@ -1,4 +1,3 @@
-const ws = require('ws')
 const utils = require('./utils')
 const sortBy = require('lodash.sortby')
 const logUpdate = require('log-update')
@@ -7,12 +6,13 @@ const path = require('path')
 const chalk = require('chalk')
 
 module.exports = function () {
-	const symbols = JSON.parse(fs.readFileSync(path.join(__dirname, '/config.json'), 'utf8')).symbols
+	const config = JSON.parse(fs.readFileSync(path.join(__dirname, '/config.json'), 'utf8'))
+	const symbols = config.symbols
 	const tickers = {}
 
 	for (let i = 0; i < symbols.length; i++) {
 		const symbol = symbols[i]
-		const w = new ws('wss://api.bitfinex.com/ws/2')
+		const w = utils.getWS(config)
 
 		w.on('message', (msg) => {
 			const values = JSON.parse(msg)
