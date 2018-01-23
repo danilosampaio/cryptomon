@@ -9,11 +9,11 @@ exports.main = async function () {
 	const symbols = config.symbols
 	const tickers = {}
 	const channels = {}
+	const wsPool = []
 
-	for (let i = 0; i < symbols.length; i++) {
-		const symbol = symbols[i]
+	symbols.forEach(function(symbol, index, array){
 		const tSymbol = 't' + symbol + 'USD'
-		const w = utils.getWS(config)
+		const w = utils.getWS(config, wsPool)
 		const msg = JSON.stringify({ 
 		  event: 'subscribe', 
 		  channel: 'ticker', 
@@ -30,15 +30,21 @@ exports.main = async function () {
 				if (values[0] === channels.ticker) {
 					let handled = handler.ticker(values[1])
 					if (handled) {
-						//candles
-						setTimeout(async function(){
-							handled += (await api.candles(tSymbol, '1h', 'hist')).padStart(7, " ")
+						if (!tickers[symbol]) {
+							handled += '...'.padStart(7, " ")
 							tickers[symbol] = handled
-							utils.updateScreen(symbols, tickers)
-						}, i * 3000)
+							utils.updateScreen(array, tickers)
+						} else {
+							//candles
+							setTimeout(async function(){
+								handled += (await api.candles(tSymbol, '1h', 'hist')).padStart(7, " ")
+								tickers[symbol] = handled
+								utils.updateScreen(array, tickers)
+							}, 5000)
+						}						
 					}
 				}
 			}
 		})
-	}
+	})
 }

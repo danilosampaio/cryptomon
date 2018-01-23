@@ -12,14 +12,29 @@ exports.values2json = function (values, props) {
 	return json
 }
 
-exports.getWS = function (config) {
-	if (config.proxy) {
-		const options = url.parse(config.proxy)
-		const agent = new HttpsProxyAgent(options)
-		return new ws(config.endpoint, { agent: agent })
-	} else {
-		return new ws(config.endpoint)
-	}
+exports.getWS = function (config, wsPool) {
+	for (let i = 0; i < wsPool.length; i++) {
+		const w = wsPool[i]
+		if (w.listenerCount('open') < 5) {
+			return w
+		} else {
+			if (config.proxy) {
+				const options = url.parse(config.proxy)
+				const agent = new HttpsProxyAgent(options)
+				const nw = new ws(config.endpoint, { agent: agent })
+				wsPool.push(nw)
+				return nw
+			} else {
+				const nw = new ws(config.endpoint)
+				wsPool.push(nw)
+				return nw
+			}
+		}
+	}	
+
+	const nw = new ws(config.endpoint)
+	wsPool.push(nw)
+	return nw
 }
 
 exports.updateScreen = function (symbols, tickers) {
